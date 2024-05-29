@@ -1,0 +1,49 @@
+<!--
+    Data-Binding:
+    Permite ligar tags HTML a dados definidos no JavaScript.
+    É reativo, ou seja, ao ser alterado a interface é atualizada junto.
+
+   - É representada pela notação mustache {{ DADO }} quando queremos exibir na pagina.
+   - Ultilizamos o atributo de tag v-model para alterar o dado.
+   - Ultilizamos o v-bind (ou apenas) para atribuir o valor de eum dado para um atributo de tag.
+-->
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+   <h1 v-if="isNight">Boa Noite</h1>
+   <h1 v-else>Bom dia</h1>
+   
+<ul>
+    <li :style="{ color: aluno.cor }" v-for="aluno in alunos">
+       {{ aluno.nome }}  
+    </li>
+</ul>
+</div>
+
+<script type="module">
+    const { createApp } = Vue 
+
+    const now = new Date()
+    const isNight = now.getHours() >= 18
+    const students = [
+        {nome: 'Alan',cor: 'purple'},
+        {nome: 'Anderson',cor: 'blue'},
+        {nome: 'Bruno',cor: 'black'},
+        {nome: 'Guilherme',cor: 'blue'},
+        {nome: 'Gustavo',cor: 'pink'},
+        {nome: 'Matheus',cor: 'green'},
+        {nome: 'Victor',cor: 'red'},
+        {nome: 'Ysaac',cor: 'yellow'}
+    ]
+   
+      createApp({
+        data: () => ({
+           isNight,
+           alunos: students
+        })
+
+        }).mount('#app')
+
+</script>
+

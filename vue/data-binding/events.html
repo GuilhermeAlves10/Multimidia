@@ -1,0 +1,70 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+  <h1>Lista de tarefas</h1>
+  <button @click="handleList">
+    {{ showList ? 'Ocultar lista' : 'Visualizar lista' }}
+  </button>
+  <br><br>
+  <input type="text" v-model="currentTask" @keyup.enter="addTask">
+
+  <ul v-show="showList">
+    <li :class="{ riscado: task.isDone }" v-for="task in tasks">
+      {{ task.title }}
+      <button @click="complete(task)">&check;</button>
+      <button v-on:click="remove(task)">&times;</button>
+    </li>
+  </ul>
+</div>
+
+<script type="module">
+  const { createApp } = Vue
+
+  const task = {
+    title: 'Aprender Vue',
+    isDone: true
+  }
+
+  const tasks = [
+    task
+  ]
+
+  createApp({
+    data: () => ({
+      showList: false,
+      currentTask: '',
+      tasks,
+    }),
+    methods: {
+      handleList () {
+        this.showList = !this.showList
+      },
+      complete (task) {
+        task.isDone = !task.isDone
+      },
+      remove (task) {
+        this.tasks = this.tasks.filter(t => t.title !== task.title)
+      },
+      addTask () {
+        this.tasks.push({
+          title: this.currentTask,
+          isDone: false
+        })
+
+        this.currentTask = ''
+      }
+    }
+  }).mount('#app')
+</script>
+
+<style>
+  .riscado {
+    text-decoration: line-through;
+  }
+</style>
+
+<style>
+    .riscado{
+        text-decoration: line-through;
+    }
+</style>
